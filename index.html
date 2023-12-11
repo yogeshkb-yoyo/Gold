@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Price Prediction</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            color: #555;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        p.mse,
+        p.volatility,
+        p.accuracy,
+        p.mse-backtesting,
+        p.volatility-backtesting,
+        p.volatility-val-ensemble {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Additional Styles for Interactivity */
+        .toggle-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .toggle-button:hover {
+            background-color: #45a049;
+        }
+
+        .hidden-content {
+            display: none;
+        }
+
+        /* Styles for Charts */
+        .chart-container {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        /* Styles for Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Gold Price Prediction</h1>
+
+    <!-- Regression Validation Plot -->
+    <div class="chart-container">
+        <img id="validation-plot" src="{{ url_for('static', filename='validation_plot_regression.png') }}"
+            alt="Validation Plot">
+        <img id="prediction-plot" src="{{ url_for('static', filename='prediction_plot_regression.png') }}"
+            alt="Prediction Plot">
+        <p class="mse">MSE (Mean Squared Error): {{ mse_test_reg }}</p>
+        <p class="volatility">Volatility (Risk): {{ volatility_test_reg }}</p>
+        <p class="accuracy">Classification Accuracy: {{ accuracy_test_class }}</p>
+    </div>
+
+    <!-- Toggle Button for Additional Information -->
+    <button class="toggle-button" onclick="toggleInfo()">Show Additional Information</button>
+
+    <!-- Hidden Content -->
+    <div id="additional-info" class="hidden-content">
+        <p class="mse-backtesting">MSE (Backtesting): {{ mse_test_backtesting }}</p>
+        <p class="volatility-backtesting">Volatility (Backtesting): {{ volatility_reg }}</p>
+        <p class="volatility-val-ensemble">Volatility (Validation Ensemble): {{ volatility_val_ensemble_reg }}</p>
+    </div>
+
+    <!-- Download CSV Button -->
+    <div>
+        <p>Download Data as CSV:</p>
+        <a href="{{ url_for('download_data') }}">
+            <button class="toggle-button">Download CSV</button>
+        </a>
+    </div>
+
+    <!-- JavaScript for Toggle Button -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        function toggleInfo() {
+            $('#additional-info').toggle('fast');
+        }
+    </script>
+</body>
+
+</html>
